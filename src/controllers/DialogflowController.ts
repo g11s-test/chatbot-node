@@ -88,8 +88,7 @@ export const messageAgent = (request: Request, response: Response) => {
         initialMessage,
         tempMessage,
         condictionsMessage,
-        rainMessage,
-        snowMessage,
+        rainMessage
       } = transformData(responseWeather, day);
 
       agent.add(new Image(condictionsIcon));
@@ -97,7 +96,6 @@ export const messageAgent = (request: Request, response: Response) => {
       agent.add(tempMessage);
       agent.add(condictionsMessage);
       agent.add(rainMessage);
-      agent.add(snowMessage);
     } catch (error) {
       if(error.trait) {
         return agent.add(error.trait);
