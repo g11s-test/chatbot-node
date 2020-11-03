@@ -32,8 +32,8 @@ export const transformData = (response: AxiosResponse, day: number = 0) => {
   const initialMessage = `Zeca: Segue abaixo o que encontrei sobre: ${location} no dia ${forecastDate}`;
   const tempMessage = `Teremos uma temperatura mínima de ${tempMin}°C e a máxima de ${tempMax}°C`;
   const condictionsMessage = `Teremos um dia com ${condictions}`;
-  const rainMessage = `Com ${chanceRain}% de chance de chuva e por conta disso teremos um dia ${willRain} chuva`;
-  const snowMessage = `Com ${chanceSnow}% de chance de neve e por conta disso teremos um dia ${willSnow} neve`;
+  const rainMessage = `Há ${chanceRain}% de chance de chuva na cidade e por conta disso teremos um dia ${willRain} chuva`;
+  const snowMessage = `Há ${chanceSnow}% de chance de neve na cidade e por conta disso teremos um dia ${willSnow} neve`;
 
   return {
     condictionsIcon,
