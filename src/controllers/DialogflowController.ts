@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { WebhookClient, Suggestion, Image } from 'dialogflow-fulfillment';
-import { WeatherService, TransformData } from '../services/WeatherService';
+import { weatherService, transformData } from '../services/WeatherService';
 
 interface ContextParameters {
   city?: string;
@@ -11,6 +11,12 @@ export const messageAgent = (request: Request, response: Response) => {
   const agent = new WebhookClient({ request, response });
 
   const opcoesCidade = () => {
+    const { city }: ContextParameters = agent.contexts[0].parameters;
+
+    if(city) {
+      return opcoesDia();
+    }
+    
     agent.add(`Zeca: Hmmm, está preocupado com o tempo!
     Diga-me o nome da cidade que deseja saber, por favor? 
     Busco ela num instante!`);
@@ -21,7 +27,11 @@ export const messageAgent = (request: Request, response: Response) => {
   };
 
   const opcoesDia = () => {
-    const { city }: ContextParameters = agent.contexts[0].parameters;
+    const { city, day }: ContextParameters = agent.contexts[0].parameters;
+
+    if(day) {
+      return consultaAPI();
+    }
 
     switch (city) {
       case 'São Paulo':
@@ -67,11 +77,11 @@ export const messageAgent = (request: Request, response: Response) => {
     agent.add(new Suggestion('Depois de amanhã'));
   };
 
-  const ConsultaAPI = async () => {
+  const consultaAPI = async () => {
     const { city, day }: ContextParameters = agent.contexts[0].parameters;
 
     try {
-      const responseWeather = await WeatherService(city, day);
+      const responseWeather = await weatherService(city, day);
 
       const {
         condictionsIcon,
@@ -80,7 +90,7 @@ export const messageAgent = (request: Request, response: Response) => {
         condictionsMessage,
         rainMessage,
         snowMessage,
-      } = TransformData(responseWeather, day);
+      } = transformData(responseWeather, day);
 
       agent.add(new Image(condictionsIcon));
       agent.add(initialMessage);
@@ -89,6 +99,10 @@ export const messageAgent = (request: Request, response: Response) => {
       agent.add(rainMessage);
       agent.add(snowMessage);
     } catch (error) {
+      if(error.trait) {
+        return agent.add(error.trait);
+      }
+      
       agent.add('Zeca: Não consegui identificar como está o tempo!');
     }
   };
@@ -96,6 +110,6 @@ export const messageAgent = (request: Request, response: Response) => {
   const intentMap = new Map();
   intentMap.set('tempo.cidade', opcoesCidade);
   intentMap.set('tempo.cidade - escolha-cidade', opcoesDia);
-  intentMap.set('tempo.cidade - escolha-dia', ConsultaAPI);
+  intentMap.set('tempo.cidade - escolha-dia', consultaAPI);
   agent.handleRequest(intentMap);
 };
