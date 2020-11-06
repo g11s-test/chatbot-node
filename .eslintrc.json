@@ -18,7 +18,14 @@
     "dot-notation": "off",
     "prefer-const": "off",
     "no-console": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
+    "consistent-return": "off",
+    "no-use-before-define": "off",
+    "default-case": "off",
+    "no-throw-literal": "off",
+    "operator-linebreak": "off"
   },
   "settings": {
     "import/resolver": {

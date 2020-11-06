@@ -1,15 +1,18 @@
 import { AxiosResponse } from 'axios';
 import axios from '../config/axios';
 
-export const weatherService = async (city: string = 'Rio de Janeiro', day: number = 0) => {
+export const weatherService = async (
+  city: string = 'Rio de Janeiro',
+  day: number = 0
+) => {
   const hourNow = new Date().getHours();
   const path = encodeURI(`forecast.json?key=${
     process.env.WEATHER_API_KEY
   }&q=${city}&lang=pt&days=${Number(day) + 1}&hour=${hourNow}
   `);
 
-  if(!process.env.WEATHER_API_KEY) {
-    throw {"trait": "Zeca: Ficou faltando o TOKEN da API"};
+  if (!process.env.WEATHER_API_KEY) {
+    throw { trait: 'Zeca: Ficou faltando o TOKEN da API' };
   }
 
   return axios.get(path);
@@ -37,6 +40,6 @@ export const transformData = (response: AxiosResponse, day: number = 0) => {
     initialMessage,
     tempMessage,
     condictionsMessage,
-    rainMessage
+    rainMessage,
   };
 };

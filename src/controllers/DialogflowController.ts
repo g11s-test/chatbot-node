@@ -13,10 +13,10 @@ export const messageAgent = (request: Request, response: Response) => {
   const opcoesCidade = () => {
     const { city }: ContextParameters = agent.contexts[0].parameters;
 
-    if(city) {
+    if (city) {
       return opcoesDia();
     }
-    
+
     agent.add(`Zeca: Hmmm, está preocupado com o tempo!
     Diga-me o nome da cidade que deseja saber, por favor? 
     Busco ela num instante!`);
@@ -29,7 +29,7 @@ export const messageAgent = (request: Request, response: Response) => {
   const opcoesDia = () => {
     const { city, day }: ContextParameters = agent.contexts[0].parameters;
 
-    if(day) {
+    if (day) {
       return consultaAPI();
     }
 
@@ -88,7 +88,7 @@ export const messageAgent = (request: Request, response: Response) => {
         initialMessage,
         tempMessage,
         condictionsMessage,
-        rainMessage
+        rainMessage,
       } = transformData(responseWeather, day);
 
       agent.add(new Image(condictionsIcon));
@@ -97,10 +97,10 @@ export const messageAgent = (request: Request, response: Response) => {
       agent.add(condictionsMessage);
       agent.add(rainMessage);
     } catch (error) {
-      if(error.trait) {
+      if (error.trait) {
         return agent.add(error.trait);
       }
-      
+
       agent.add('Zeca: Não consegui identificar como está o tempo!');
     }
   };
