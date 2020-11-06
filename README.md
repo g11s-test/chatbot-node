@@ -53,4 +53,9 @@ https://console.cloud.google.com/flows/enableapi?apiid=dialogflow.googleapis.com
 
 Utilizar esse comando no powershell \$env:GOOGLE_APPLICATION_CREDENTIALS="caminhodachave.json"<br /><br />
 
-O comando abaixo serve para verificar se foi configurado devidamente \$env:GOOGLE_APPLICATION_CREDENTIALS
+O comando abaixo serve para verificar se foi configurado devidamente \$env:GOOGLE_APPLICATION_CREDENTIALS<br/>
+
+# A parte de serviço
+
+Ela devolve apenas a porcentagem de chance de chuva<br/>
+Porém, o fluxo de conversa utilizando o bot no painel do dialogflow funciona 100% com direito a opções e imagens<br/>
